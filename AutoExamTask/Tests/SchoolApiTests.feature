@@ -7,3 +7,5 @@ Scenario: Login with Admin role
 	Given login data is prepared
 	When execute login API call
 	Then valid JWT token is returned
+
+Scenario: TBD
