@@ -8,4 +8,4 @@ Scenario: Login with Admin role
 	When execute login API call
 	Then valid JWT token is returned
 
-Scenario: TBD
+Scenario: TBD checking push
