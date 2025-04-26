@@ -22,7 +22,6 @@ namespace AutoExamTask
             var еxtentTest = ExtentManager.CreateTest("Scenario: " + GetScenarioName(_scenarioContext));
             _scenarioContext["ExtentTest"] = еxtentTest;
             UtilitiesMethods.LogMessage("Starting scenario", _scenarioContext);
-            Logger.Log.Info("Starting scenario...");
         }
 
         [BeforeStep]

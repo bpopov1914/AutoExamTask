@@ -5,7 +5,7 @@ namespace AutoExamTask.Rest.DataManagement
     public class ResponseDataExtractors
     {
 
-        public string ExtractLoggedInUserToken(string jsonResponse, string jsonIdentfier = "token")
+        public string ExtractLoggedInToken(string jsonResponse, string jsonIdentfier = "access_token")
         {
             JObject jsonObject = JObject.Parse(jsonResponse);
             return jsonObject[jsonIdentfier]?.ToString();

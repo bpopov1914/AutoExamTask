@@ -1,26 +1,24 @@
 ﻿using RestSharp;
+using System.Security.Policy;
 
 namespace AutoExamTask.Rest.Calls
 {
     public class RestCalls
     {
-        public RestResponse LoginCall(string url, string username, string password, bool rememberMe = false)
+        private string baseUrl = "https://schoolprojectapi.onrender.com";
+
+        public RestResponse LoginCall(string username, string password)
         {
-            RestClientOptions options = new RestClientOptions(url)
+            RestClientOptions options = new RestClientOptions(baseUrl)
             {
                 Timeout = TimeSpan.FromSeconds(120),
             };
-
             RestClient client = new RestClient(options);
-
-            RestRequest request = new RestRequest("/users/login", Method.Post);
-
-            request.AddHeader("Content-Type", "application/json");
-
-            string body = @"{""usernameOrEmail"":""" + username + @""",""password"":""" + password + @""",""rememberMe"":""" + rememberMe.ToString().ToLower() + @"""}";
-
-            request.AddStringBody(body, DataFormat.Json);
-
+            RestRequest request = new RestRequest("/auth/login", Method.Post);
+            request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+            request.AddHeader("Accept", "application/json");
+            request.AddParameter("username", username);
+            request.AddParameter("password", password);
             RestResponse response = client.Execute(request);
 
             return response;
