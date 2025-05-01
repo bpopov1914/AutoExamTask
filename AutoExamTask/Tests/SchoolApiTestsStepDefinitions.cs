@@ -13,6 +13,7 @@ namespace AutoExamTask.Tests
         private RestCalls restCalls = new RestCalls();
         private ResponseDataExtractors extractResponseData = new ResponseDataExtractors();
         private RestResponse loginResponse;
+        private RestResponse createClassResponse;
         private readonly ScenarioContext _scenarioContext;
         private ExtentTest _test;
 
@@ -33,7 +34,7 @@ namespace AutoExamTask.Tests
         [When("execute create class API call: \"(.*)\" with subjects \"(.*)\", \"(.*)\", \"(.*)\"")]
         public void WhenExecuteCreateClassAPICallWithSubjects(string className, string subjOne, string subjTwo, string subjThree)
         {
-            RestResponse response = restCalls.CreateClass(restCalls.token, className, subjOne, subjTwo, subjThree);
+            createClassResponse = restCalls.CreateClass(restCalls.token, className, subjOne, subjTwo, subjThree);
             _test.Log(Status.Info, $@"Create class call is executed.");
         }
 
@@ -53,8 +54,14 @@ namespace AutoExamTask.Tests
         {
             UtilitiesMethods.AssertEqual(
                 System.Net.HttpStatusCode.OK,
-                loginResponse.StatusCode,
-                "Class was not created: " + loginResponse.Content,
+                createClassResponse.StatusCode,
+                "Class was not created: " + createClassResponse.Content,
+                _scenarioContext);
+
+            UtilitiesMethods.AssertEqual(
+                "Class created",
+                extractResponseData.ExtractStockMessage(createClassResponse.Content),
+                "Class was not created: " + createClassResponse.Content,
                 _scenarioContext);
         }
 

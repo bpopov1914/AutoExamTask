@@ -43,6 +43,7 @@ namespace AutoExamTask.Rest.Calls
             };
             RestClient client = new RestClient(options);
             RestRequest request = new RestRequest($"/classes/create?class_name={className}&subject_1={subjectOne}&subject_2={subjectTwo}&subject_3={subjectThree}", Method.Post);
+            request.AddHeader("Authorization", $"Bearer {token}");
             request.AddHeader("Accept", "application/json");
             RestResponse response = client.Execute(request);
 
