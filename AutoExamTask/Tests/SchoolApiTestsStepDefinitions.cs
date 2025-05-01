@@ -20,6 +20,7 @@ namespace AutoExamTask.Tests
         private RestResponse createParentResponse;
         private RestResponse connectStudentResponse;
         private RestResponse addGradeResponse;
+        private RestResponse viewGradesResponse;
         private readonly ScenarioContext _scenarioContext;
         private ExtentTest _test;
 
@@ -68,6 +69,12 @@ namespace AutoExamTask.Tests
             _test.Log(Status.Info, $@"Add grade call was executed.");
         }
 
+        [When("execute View Grades API call for student \"(.*)\"")]
+        public void WhenExecuteViewGradesAPICall(string studentId)
+        {
+            viewGradesResponse = restCalls.ViewGrades(studentId);
+            _test.Log(Status.Info, $@"View grades call was executed.");
+        }
 
         [Then("valid JWT token is returned")]
         public void ThenValidJWTTokenIsReturned()
@@ -149,7 +156,15 @@ namespace AutoExamTask.Tests
                 _scenarioContext);
         }
 
-
+        [Then("grades only for student linked to the parent are returned")]
+        public void ThenGradesOnlyForStudentLinkedToTheParentAreReturned()
+        {
+            UtilitiesMethods.AssertEqual(
+                System.Net.HttpStatusCode.OK,
+                viewGradesResponse.StatusCode,
+                "Grades were not returned: " + viewGradesResponse.Content,
+                _scenarioContext);
+        }
 
     }
 }

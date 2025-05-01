@@ -1,6 +1,8 @@
 ﻿using RestSharp;
 using AutoExamTask.Rest.DataManagement;
 using AutoExamTask.Utilities;
+using System.Diagnostics;
+using System.Reactive.Subjects;
 
 namespace AutoExamTask.Rest.Calls
 {
@@ -146,6 +148,29 @@ namespace AutoExamTask.Rest.Calls
             };
             RestClient client = new RestClient(options);
             RestRequest request = new RestRequest($"/grades/add?student_id={studentId}&subject={subjectName}&grade={grade}", Method.Put);
+            request.AddHeader("Authorization", $"Bearer {token}");
+            request.AddHeader("Accept", "application/json");
+            RestResponse response = new RestResponse();
+            try
+            {
+                response = client.Execute(request);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error("Something went wrong. The response content was: " + response.Content);
+            }
+
+            return response;
+        }
+
+        public RestResponse ViewGrades(string studentId)
+        {
+            RestClientOptions options = new RestClientOptions(baseUrl)
+            {
+                Timeout = TimeSpan.FromSeconds(120),
+            };
+            RestClient client = new RestClient(options);
+            RestRequest request = new RestRequest($"/grades/student/{studentId}", Method.Get);
             request.AddHeader("Authorization", $"Bearer {token}");
             request.AddHeader("Accept", "application/json");
             RestResponse response = new RestResponse();

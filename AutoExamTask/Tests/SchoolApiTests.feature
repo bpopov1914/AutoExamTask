@@ -24,12 +24,12 @@ Scenario: Add Student to Class
 @addGradeForStudent
 Scenario: Add Grade for Student
 	Given execute login API call with "teacher11" username and "teacher11" password
-	When execute Add Grade API call "187f3276-d293-42f4-a462-7254ab493264", "Subject 2", 5
+	When execute Add Grade API call "e8c3daff-6bc4-4a6b-a0d8-32f61afb206d", "Subject 2", 5
 	Then student is assigned grade
 
 @parentCanSeeStudentGrades
 Scenario: Parent can see student grades
 	Given execute login API call with "BpParent" username and "BpParent" password
-	When execute View Grades API call
+	When execute View Grades API call for student "e8c3daff-6bc4-4a6b-a0d8-32f61afb206d"
 	Then grades only for student linked to the parent are returned
 
