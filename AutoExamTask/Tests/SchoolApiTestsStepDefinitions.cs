@@ -19,6 +19,7 @@ namespace AutoExamTask.Tests
         private RestResponse addStudentResponse;
         private RestResponse createParentResponse;
         private RestResponse connectStudentResponse;
+        private RestResponse addGradeResponse;
         private readonly ScenarioContext _scenarioContext;
         private ExtentTest _test;
 
@@ -54,10 +55,17 @@ namespace AutoExamTask.Tests
         public void WhenCreateParentWithUsernameAndPassword(string parentName, string password)
         {
             createParentResponse = restCalls.CreateUser(parentName, password, "parent");
-            _test.Log(Status.Info, $@"Create user with Parent roll was executed.");
+            _test.Log(Status.Info, $@"Create user with Parent role was executed.");
             string studentId = extractResponseData.ExtractStudentId(addStudentResponse.Content);
             connectStudentResponse = restCalls.ConnectStudent(parentName, studentId);
             _test.Log(Status.Info, $@"Connect Student to Parent call is executed.");
+        }
+
+        [When("execute Add Grade API call \"(.*)\", \"(.*)\", (.*)")]
+        public void WhenExecuteAddGradeAPICall(string studentId, string subjectName, int grade)
+        {
+            addGradeResponse = restCalls.AddGrade(studentId, subjectName, grade);
+            _test.Log(Status.Info, $@"Add grade call was executed.");
         }
 
 
@@ -124,6 +132,23 @@ namespace AutoExamTask.Tests
                 "Actual: " + connectStudentResponse.Content,
                 _scenarioContext);
         }
+
+        [Then("student is assigned grade")]
+        public void ThenStudentIsAssignedGrade()
+        {
+            UtilitiesMethods.AssertEqual(
+                System.Net.HttpStatusCode.OK,
+                addGradeResponse.StatusCode,
+                "Grade was not assigned: " + addGradeResponse.Content,
+                _scenarioContext);
+
+            UtilitiesMethods.AssertEqual(
+                "Grade updated",
+                extractResponseData.ExtractStockMessage(addGradeResponse.Content),
+                "Actual: " + addGradeResponse.Content,
+                _scenarioContext);
+        }
+
 
 
     }

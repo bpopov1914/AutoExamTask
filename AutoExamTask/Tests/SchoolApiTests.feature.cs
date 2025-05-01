@@ -207,10 +207,11 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.GivenAsync("execute login API call with \"teacher11\" username and \"teacher11\" password", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 27
- await testRunner.WhenAsync("execute Add Grade API call \"student\", \"subject\", \"grade\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("execute Add Grade API call \"187f3276-d293-42f4-a462-7254ab493264\", \"Subject 2\", 5" +
+                        "", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 28
- await testRunner.ThenAsync("student is graded", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync("student is assigned grade", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -236,7 +237,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 32
- await testRunner.GivenAsync("execute login API call with \"parent\" username and \"parent\" password", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("execute login API call with \"BpParent\" username and \"BpParent\" password", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 33
  await testRunner.WhenAsync("execute View Grades API call", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");

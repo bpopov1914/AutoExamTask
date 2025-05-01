@@ -138,5 +138,28 @@ namespace AutoExamTask.Rest.Calls
             return response;
         }
 
+        public RestResponse AddGrade(string studentId, string subjectName, int grade)
+        {
+            RestClientOptions options = new RestClientOptions(baseUrl)
+            {
+                Timeout = TimeSpan.FromSeconds(120),
+            };
+            RestClient client = new RestClient(options);
+            RestRequest request = new RestRequest($"/grades/add?student_id={studentId}&subject={subjectName}&grade={grade}", Method.Put);
+            request.AddHeader("Authorization", $"Bearer {token}");
+            request.AddHeader("Accept", "application/json");
+            RestResponse response = new RestResponse();
+            try
+            {
+                response = client.Execute(request);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error("Something went wrong. The response content was: " + response.Content);
+            }
+
+            return response;
+        }
+
     }
 }
