@@ -21,7 +21,16 @@ namespace AutoExamTask.Rest.Calls
             request.AddHeader("Accept", "application/json");
             request.AddParameter("username", username);
             request.AddParameter("password", password);
-            RestResponse response = client.Execute(request);
+            RestResponse response = new RestResponse();
+            try
+            {
+                response = client.Execute(request);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error("Something went wrong. The response content was: " + response.Content);
+            }
+
             try
             {
                 token = responseDataExtractors.ExtractLoggedInToken(response.Content);
@@ -44,7 +53,15 @@ namespace AutoExamTask.Rest.Calls
             RestRequest request = new RestRequest($"/classes/create?class_name={className}&subject_1={subjectOne}&subject_2={subjectTwo}&subject_3={subjectThree}", Method.Post);
             request.AddHeader("Authorization", $"Bearer {token}");
             request.AddHeader("Accept", "application/json");
-            RestResponse response = client.Execute(request);
+            RestResponse response = new RestResponse();
+            try
+            {
+                response = client.Execute(request);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error("Something went wrong. The response content was: " + response.Content);
+            }
 
             return response;
         }
@@ -59,7 +76,15 @@ namespace AutoExamTask.Rest.Calls
             RestRequest request = new RestRequest($"/classes/add_student?name={studentName}&class_id={classId}", Method.Post);
             request.AddHeader("Authorization", $"Bearer {token}");
             request.AddHeader("Accept", "application/json");
-            RestResponse response = client.Execute(request);
+            RestResponse response = new RestResponse();
+            try
+            {
+                response = client.Execute(request);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error("Something went wrong. The response content was: " + response.Content);
+            }
 
             return response;
         }
@@ -77,7 +102,15 @@ namespace AutoExamTask.Rest.Calls
             RestRequest request = new RestRequest($"/users/create?username={username}&password={password}&role={role}", Method.Post);
             request.AddHeader("Authorization", $"Bearer {token}");
             request.AddHeader("Accept", "application/json");
-            RestResponse response = client.Execute(request);
+            RestResponse response = new RestResponse();
+            try
+            {
+                response = client.Execute(request);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error("Something went wrong. The response content was: " + response.Content);
+            }
 
             return response;
         }
@@ -92,7 +125,15 @@ namespace AutoExamTask.Rest.Calls
             RestRequest request = new RestRequest($"/users/connect_parent?parent_username={parentName}&student_id={studentId}", Method.Put);
             request.AddHeader("Authorization", $"Bearer {token}");
             request.AddHeader("Accept", "application/json");
-            RestResponse response = client.Execute(request);
+            RestResponse response = new RestResponse();
+            try
+            {
+                response = client.Execute(request);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error("Something went wrong. The response content was: " + response.Content);
+            }
 
             return response;
         }
