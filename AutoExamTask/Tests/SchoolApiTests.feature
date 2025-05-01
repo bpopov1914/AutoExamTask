@@ -16,10 +16,10 @@ Scenario: Teacher create class
 @addStudentToClass
 Scenario: Add Student to Class
 	Given execute login API call with "teacher11" username and "teacher11" password
-	When execute Add Student API call 
+	When execute Add Student API call with student name "BP Student" and class id "eb050d07-a296-4bf9-9939-5c6ee902d6c8" 
 	When execute login API call with "admin7" username and "admin129" password
-	When execute Connect Parent API call
-	Then subjects are inherited
+	When create parent with "BpParent" username and "BpParent" password and connect to student
+	Then student is added to class and connected to parent
 
 @addGradeForStudent
 Scenario: Add Grade for Student

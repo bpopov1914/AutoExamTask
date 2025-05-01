@@ -14,7 +14,6 @@ namespace AutoExamTask.Utilities
             {
                 var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
                 var htmlReporter = new ExtentSparkReporter($"TestReport_{timestamp}.html");
-                //htmlReporter.LoadConfig("extent-config.xml");
                 htmlReporter.Config.DocumentTitle = "Test Execution Report";
                 htmlReporter.Config.ReportName = "Functional Tests";
                 htmlReporter.Config.TimelineEnabled = true;

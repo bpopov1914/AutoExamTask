@@ -167,16 +167,18 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.GivenAsync("execute login API call with \"teacher11\" username and \"teacher11\" password", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 19
- await testRunner.WhenAsync("execute Add Student API call", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("execute Add Student API call with student name \"BP Student\" and class id \"eb050d0" +
+                        "7-a296-4bf9-9939-5c6ee902d6c8\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 20
  await testRunner.WhenAsync("execute login API call with \"admin7\" username and \"admin129\" password", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 21
- await testRunner.WhenAsync("execute Connect Parent API call", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("create parent with \"BpParent\" username and \"BpParent\" password and connect to stu" +
+                        "dent", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 22
- await testRunner.ThenAsync("subjects are inherited", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync("student is added to class and connected to parent", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

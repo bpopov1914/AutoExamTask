@@ -1,6 +1,5 @@
 ﻿using RestSharp;
 using AutoExamTask.Rest.DataManagement;
-using System.Security.Policy;
 using AutoExamTask.Utilities;
 
 namespace AutoExamTask.Rest.Calls
@@ -9,7 +8,7 @@ namespace AutoExamTask.Rest.Calls
     {
         ResponseDataExtractors responseDataExtractors = new ResponseDataExtractors();
         private string baseUrl = "https://schoolprojectapi.onrender.com";
-        public string token = "";
+        private string token = "";
         public RestResponse LoginCall(string username, string password)
         {
             RestClientOptions options = new RestClientOptions(baseUrl)
@@ -35,7 +34,7 @@ namespace AutoExamTask.Rest.Calls
             return response;
         }
 
-        public RestResponse CreateClass(string token, string className, string subjectOne, string subjectTwo, string subjectThree)
+        public RestResponse CreateClass(string className, string subjectOne, string subjectTwo, string subjectThree)
         {
             RestClientOptions options = new RestClientOptions(baseUrl)
             {
@@ -43,6 +42,54 @@ namespace AutoExamTask.Rest.Calls
             };
             RestClient client = new RestClient(options);
             RestRequest request = new RestRequest($"/classes/create?class_name={className}&subject_1={subjectOne}&subject_2={subjectTwo}&subject_3={subjectThree}", Method.Post);
+            request.AddHeader("Authorization", $"Bearer {token}");
+            request.AddHeader("Accept", "application/json");
+            RestResponse response = client.Execute(request);
+
+            return response;
+        }
+
+        public RestResponse AddStudentToClass(string studentName, string classId)
+        {
+            RestClientOptions options = new RestClientOptions(baseUrl)
+            {
+                Timeout = TimeSpan.FromSeconds(120),
+            };
+            RestClient client = new RestClient(options);
+            RestRequest request = new RestRequest($"/classes/add_student?name={studentName}&class_id={classId}", Method.Post);
+            request.AddHeader("Authorization", $"Bearer {token}");
+            request.AddHeader("Accept", "application/json");
+            RestResponse response = client.Execute(request);
+
+            return response;
+        }
+
+        public RestResponse CreateUser(string username, string password, string role)
+        {
+            RestClientOptions options = new RestClientOptions(baseUrl)
+            {
+                Timeout = TimeSpan.FromSeconds(120),
+            };
+            RestClient client = new RestClient(options);
+
+            username = $"{username}_{DateTime.Now:yyyyMMdd_HHmmss}";
+
+            RestRequest request = new RestRequest($"/users/create?username={username}&password={password}&role={role}", Method.Post);
+            request.AddHeader("Authorization", $"Bearer {token}");
+            request.AddHeader("Accept", "application/json");
+            RestResponse response = client.Execute(request);
+
+            return response;
+        }
+
+        public RestResponse ConnectStudent(string parentName, string studentId)
+        {
+            RestClientOptions options = new RestClientOptions(baseUrl)
+            {
+                Timeout = TimeSpan.FromSeconds(120),
+            };
+            RestClient client = new RestClient(options);
+            RestRequest request = new RestRequest($"/users/connect_parent?parent_username={parentName}&student_id={studentId}", Method.Put);
             request.AddHeader("Authorization", $"Bearer {token}");
             request.AddHeader("Accept", "application/json");
             RestResponse response = client.Execute(request);

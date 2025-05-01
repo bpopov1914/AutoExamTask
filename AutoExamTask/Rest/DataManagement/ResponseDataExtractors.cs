@@ -11,11 +11,12 @@ namespace AutoExamTask.Rest.DataManagement
             return jsonObject[jsonIdentfier]?.ToString();
         }
 
-        //public int ExtractUserId(string jsonResponse)
-        //{
-        //    var jsonObject = JObject.Parse(jsonResponse);
-        //    return jsonObject["user"]?["id"]?.Value<int>() ?? 0;
-        //}
+        public string ExtractStudentId(string jsonResponse)
+        {
+            JObject jsonObject = JObject.Parse(jsonResponse);
+            return jsonObject["student_id"]?.ToString();
+
+        }
 
         public string ExtractStockMessage(string jsonResponse)
         {
