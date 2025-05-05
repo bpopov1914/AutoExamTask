@@ -33,3 +33,4 @@ The project is organized into several key components for improved modularity and
 - ⚠️ **Negative Test Scenarios**: Additional negative test cases should be added, such as:
   - A parent attempting to view the grades of a student who is not connected to them.
   - Other edge cases where expected behavior fails under abnormal conditions.
+Test
